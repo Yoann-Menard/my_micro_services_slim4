@@ -1,0 +1,23 @@
+GET http://localhost:5555/discussion/
+
+###
+
+POST http://localhost:5555/discussion/create/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Discussion",
+    "users": ["test1", "test2"]
+}
+
+###
+
+PUT http://localhost:5555/discussion/:id/update/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Discussion updated",
+    "users": ["test2", "test3"]
+}
