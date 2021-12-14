@@ -1,19 +1,16 @@
 <?php
 declare(strict_types=1);
 
-use App\Application\Models\User;
 use App\Application\Actions\User\AddUserAction;
 use App\Application\Actions\User\GetUserAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\DeleteUserAction;
 use App\Application\Actions\User\UpdateUserAction;
-use App\Application\Models\Message;
 use App\Application\Actions\Message\AddMessageAction;
 use App\Application\Actions\Message\GetMessageAction;
 use App\Application\Actions\Message\ListMessagesAction;
 use App\Application\Actions\Message\DeleteMessageAction;
 use App\Application\Actions\Message\UpdateMessageAction;
-use App\Application\Actions\User\ViewUserAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -26,13 +23,8 @@ return function (App $app) {
     });
 
     $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write('Hello world!');
+        $response->getBody()->write('Helo World!');
         return $response;
-    });
-
-    $app->group('/users', function (Group $group) {
-        $group->get('', ListUsersAction::class);
-        $group->get('/{id}', ViewUserAction::class);
     });
 
     $app->group('/message', function (Group $group) {

@@ -13,7 +13,10 @@ class AddMessageAction extends MessageAction
     {
         $data = $this->request->getParsedBody();
         $message = new Message;
-        $message->name = $data["name"];
+        // $message->author = $data['author'];
+        // $message->text = $data['text'];
+        $message->author = $data->author;
+        $message->text = $data->text;
         $message->save();
         return $this->respondWithData($message);
     }
