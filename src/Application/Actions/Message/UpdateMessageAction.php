@@ -21,4 +21,17 @@ class UpdateMessageAction extends MessageAction
         $message->save();
         return $this->respondWithData($message);
     }
+        protected function parseBody() {
+        // parsing from key=value&key2=value2 to [key => value, key2 => value2]
+        $data;
+        $raw = $this->request->getBody()->getContents();
+        if (empty($raw))
+            return $this->request->getParsedBody();
+        $cutted = explode("&", $raw);
+        foreach ($cutted as $param) {
+            list($key, $value) = explode("=", $param);
+            $data[$key] = $value;
+        }
+        return $data;
+    }
 }

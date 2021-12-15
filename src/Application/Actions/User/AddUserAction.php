@@ -13,13 +13,9 @@ class AddUserAction extends UserAction
     {
         $data = $this->request->getParsedBody();
         $user = new User;
-        // $user->name = $data['name'];
-        // $user->email = $data['email'];
-        // $user->password = $data['password'];
-        $user->name = $data->name;
-        $user->email = $data->email;
-        $user->password = $data->password;
-        var_dump($user);
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = $data['password'];
         $user->save();
         return $this->respondWithData($user);
     }

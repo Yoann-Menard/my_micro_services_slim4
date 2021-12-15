@@ -27,6 +27,11 @@ return function (App $app) {
         return $response;
     });
 
+    $app->get('/register', function( Request $request, Response $response) {
+        $response->getBody()->write('Json Web Token is Valid!');
+        return $response;
+    });
+
     $app->group('/message', function (Group $group) {
         $group->get('s', ListMessagesAction::class);
         $group->post('', AddMessageAction::class);
