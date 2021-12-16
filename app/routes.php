@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Application\Actions\User\AddUserAction;
 use App\Application\Actions\User\GetUserAction;
 use App\Application\Actions\User\ListUsersAction;
+use App\Application\Actions\User\LoginUserAction;
 use App\Application\Actions\User\DeleteUserAction;
 use App\Application\Actions\User\UpdateUserAction;
 use App\Application\Actions\Message\AddMessageAction;
@@ -16,6 +17,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
         // CORS Pre-Flight OPTIONS Request Handler
@@ -23,14 +27,13 @@ return function (App $app) {
     });
 
     $app->get('/', function (Request $request, Response $response) {
-        $response->getBody()->write('Helo World!');
+        $response->getBody()->write('home page');
         return $response;
     });
 
-    $app->get('/register', function( Request $request, Response $response) {
-        $response->getBody()->write('Json Web Token is Valid!');
-        return $response;
-    });
+    $app->post('/register', AddUserAction::class);
+
+    $app->post('/login', LoginUserAction::class);
 
     $app->group('/message', function (Group $group) {
         $group->get('s', ListMessagesAction::class);
@@ -38,7 +41,9 @@ return function (App $app) {
         $group->get('/{id}', GetMessageAction::class);
         $group->put('/{id}', UpdateMessageAction::class);
         $group->delete('/{id}', DeleteMessageAction::class);
-    });
+    })->add(new \Tuupola\Middleware\JwtAuthentication([
+        "secret" => $_SERVER['SECRET_KEY']
+    ]));
 
     $app->group('/user', function (Group $group) {
         $group->get('s', ListUsersAction::class);
@@ -46,5 +51,7 @@ return function (App $app) {
         $group->get('/{id}', GetUserAction::class);
         $group->put('/{id}', UpdateUserAction::class);
         $group->delete('/{id}', DeleteUserAction::class);
-    });
+    })->add(new \Tuupola\Middleware\JwtAuthentication([
+        "secret" => $_SERVER['SECRET_KEY']
+    ]));
 };

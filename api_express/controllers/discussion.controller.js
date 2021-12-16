@@ -38,7 +38,9 @@ exports.discussion_list = async (req, res, next) => {
 
 exports.discussion_detail = async (req, res, next) => {
   try {
-    const discussion = await Discussion.findById(req.params.discussionId);
+    const discussion = await Discussion.findOne({
+      _id: req_params.id,
+    });
     res.json(discussion);
   } catch (err) {
     res.json({ message: err });

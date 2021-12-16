@@ -21,7 +21,7 @@ class UpdateUserAction extends UserAction
         $user->save();
         return $this->respondWithData($user);
     }
-
+    
     protected function parseBody() {
         // parsing from key=value&key2=value2 to [key => value, key2 => value2]
         $data;
@@ -35,4 +35,4 @@ class UpdateUserAction extends UserAction
         }
         return $data;
     }
-}
+}   

@@ -15,7 +15,7 @@ class AddUserAction extends UserAction
         $user = new User;
         $user->name = $data['name'];
         $user->email = $data['email'];
-        $user->password = $data['password'];
+        $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
         $user->save();
         return $this->respondWithData($user);
     }
