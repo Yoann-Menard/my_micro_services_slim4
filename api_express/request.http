@@ -2,22 +2,30 @@ GET http://localhost:5555/discussion/
 
 ###
 
+GET http://localhost:5555/discussion/discussion/1/get/
+
+###
+
 POST http://localhost:5555/discussion/create/
 Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "Discussion",
-    "users": ["test1", "test2"]
+    "name": "nametestsoutenance2",
+    "users": ["userstestsoutenance2", "userstestsoutenance3"]
 }
 
 ###
 
-PUT http://localhost:5555/discussion/:id/update/
+PUT http://localhost:5555/discussion/3/update/
 Accept: application/json
 Content-Type: application/json
 
 {
-    "name": "Discussion updated",
-    "users": ["test2", "test3"]
+    "name": "discussiontest6updated",
+    "users": ["userstest6updated"]
 }
+
+###
+
+DELETE http://localhost:5555/discussion/6/delete/

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const DiscussionSchema = mongoose.model(
   'discussions',
   new mongoose.Schema({
-    name: {
+    name: { 
       type: String,
     },
     users: {

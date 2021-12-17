@@ -39,7 +39,7 @@ exports.discussion_list = async (req, res, next) => {
 exports.discussion_detail = async (req, res, next) => {
   try {
     const discussion = await Discussion.findOne({
-      _id: req_params.id,
+      _id: req.params.id,
     });
     res.json(discussion);
   } catch (err) {
@@ -48,35 +48,28 @@ exports.discussion_detail = async (req, res, next) => {
   next();
 };
 
-exports.discussion_create_get = async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Discussion  create GET');
-  next();
-};
-
-exports.discussion_delete_get = async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Discussion delete GET');
-  next();
-};
-
-exports.discussion_delete_post = async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Discussion delete POST');
-  next();
-};
-
-exports.discussion_update_get = async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Discussion update GET');
-  next();
-};
-
-exports.discussion_update_post = async (req, res, next) => {
+exports.discussion_update_put = async (req, res, next) => {
   const discussion = new Discussion({
+    _id: req.params.id,
     name: req.body.name,
     users: req.body.users,
   });
 
   try {
-    const updatedDiscussion = await discussion.updateOne();
+    const updatedDiscussion = await discussion.updateMany();
     res.json(updatedDiscussion);
+  } catch (err) {
+    res.json({ message: err });
+    next();
+  }
+};
+
+exports.discussion_delete_delete = async (req, res, next) => {
+  try {
+    const deletedDiscussion = await Discussion.deleteOne({
+      _id: req.params.id,
+    });
+    res.json(deletedDiscussion);
   } catch (err) {
     res.json({ message: err });
     next();
